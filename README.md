@@ -5,12 +5,14 @@ Print and download sheet music from Musescore.  No downloads, just run a 10-line
 ## Usage
 
 1. Navigate to a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706).
-2. Enter the developer tools (CTRL+Shift+I on Chrome).
-3. Copy and paste the project code into console (second tab on Chrome):
+2. Scroll through the sheet music to load all the pages.
+3. Enter the developer tools (CTRL+Shift+I on Chrome).
+4. Copy and paste the project code into console (second tab on Chrome):
    ```
     var temporary_el = document.createElement("DIV");
-    var sheets = document.getElementsByClassName("_3DXeP");
+    var sheets = document.getElementsByClassName("_2KmA_");
     for (i = 0; i < sheets.length; i++) {
+      sheets[i].alt = "";
       console.log(sheets[i]);
       temporary_el.appendChild(sheets[i].cloneNode(true));
     };
@@ -18,8 +20,9 @@ Print and download sheet music from Musescore.  No downloads, just run a 10-line
     html.innerHTML = '';
     document.getElementsByTagName("body")[0].remove();
     html.appendChild(temporary_el);
+    window.print();
    ```
-4. Print your music.
+5. Print your music.
 
 Please note that you can print as PDF if you want to just download and save your music.  There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
 
