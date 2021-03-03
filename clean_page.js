@@ -2,8 +2,9 @@
 var temporary_el = document.createElement("DIV");
 
 // Search and find SVG files (each an individual page)
-var sheets = document.getElementsByClassName("_3DXeP");
+var sheets = document.getElementsByClassName("_2KmA_");
 for (i = 0; i < sheets.length; i++) {
+  sheets[i].alt = "";
   console.log(sheets[i]);
   temporary_el.appendChild(sheets[i].cloneNode(true));
 };
@@ -15,3 +16,4 @@ document.getElementsByTagName("body")[0].remove();
 
 // Display only clean sheets
 html.appendChild(temporary_el);
+window.print();
