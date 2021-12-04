@@ -10,7 +10,7 @@ Print and download sheet music from Musescore.  No downloads, just run a 10-line
 4. Copy and paste the project code into console (second tab on Chrome):
    ```
     var temporary_el = document.createElement("DIV");
-    var sheets = document.getElementsByClassName("_2KmA_");
+    var sheets = document.getElementsByClassName("vAVs3");
     for (i = 0; i < sheets.length; i++) {
       sheets[i].alt = "";
       console.log(sheets[i]);
