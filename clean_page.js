@@ -2,7 +2,7 @@
 var temporary_el = document.createElement("DIV");
 
 // Search and find SVG files (each an individual page)
-var sheets = document.getElementsByClassName("Hn_kk");
+var sheets = document.getElementsByClassName("GqiX6");
 for (i = 0; i < sheets.length; i++) {
   sheets[i].alt = "";
   console.log(sheets[i]);
