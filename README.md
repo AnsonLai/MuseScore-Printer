@@ -26,6 +26,13 @@ Print and download sheet music from Musescore.  No downloads, just run a 10-line
 
 Please note that you can print as PDF if you want to just download and save your music.  There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
 
+Step 4 can also be done using the following bookmarklet:
+   ```
+   javascript:(function(){var temporary_el = document.createElement("DIV");var sheets = document.getElementsByClassName("KfFlO");for (i = 0; i < sheets.length; i++) {sheets[i].alt = "";console.log(sheets[i]);temporary_el.appendChild(sheets[i].cloneNode(true));};var html = document.getElementsByTagName("html")[0];html.innerHTML = '';document.getElementsByTagName("body")[0].remove();html.appendChild(temporary_el);window.print();})
+   ```
+
+
+
 ## Purpose
 
 Musescore houses a lot of the sheet music on the internet.  They recently went the paid subscription route so lots and lots of public domain and user generated sheet music suddenly went behind a paywall.  You can still view it on your computer, but you can't print or download.
