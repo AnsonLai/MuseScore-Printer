@@ -4,11 +4,11 @@ Print and download sheet music from Musescore. No downloads, just run a 1-line c
 
 ## Usage
 
-1. Navigate to a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706).
-2. Open Inspect Element (CTRL+Shift+I on Chrome).
-3. Copy and paste the project code into the console (second tab on Chrome) (see ./originalCode.js for the un-minified version)
+1. Navigate to a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706). 
+2. Open Inspect Element (CTRL+Shift+I on Chrome). **Important:** Make sure your screen is large enough so that the sheet music scrolls vertically (rather than horizontally)
+3. Copy and paste the following code into the console (second tab on Chrome) (see ./originalCode.js for the un-minified version)
 ```js
-const fireWhenImagesLoad=(e,t,o)=>{const n=setInterval(()=>{const l=[...document.querySelectorAll(e)];l.length===o&&l.every(e=>e.src&&e.complete)&&(clearInterval(n),t(l))},500)},pages=document.querySelectorAll("#jmuse-scroller-component>.F16e6");for(const e of pages)e.style.height="0px";document.querySelector("section.ASx44").style.height="999px",document.getElementById("jmuse-scroller-component").scrollTo(0,1),fireWhenImagesLoad(".F16e6>img",e=>{const t=document.createElement("div");for(const o of e)o.style.height="250mm",t.appendChild(o.cloneNode(!0));document.getElementsByTagName("html")[0].innerHTML="",document.body.appendChild(t),fireWhenImagesLoad("img",window.print,pages.length)},pages.length);
+!function(){const e=(e,n,t)=>{const o=setInterval((()=>{const m=[...document.querySelectorAll(e)];m.length===t&&m.every((e=>e.src&&e.complete))&&(clearInterval(o),n(m))}),500)},n="#jmuse-scroller-component",t=`${n}>.F16e6`,o=`${t}>img`,m=document.querySelector(n),l=document.querySelectorAll(t);m.style.scrollSnapType="none",m.style.overflow="visible";for(const e of l)e.style.height="0px",e.style.width="0px",e.style.margin="0px";e(o,(n=>{document.getElementsByTagName("html")[0].innerHTML="";const t=document.createElement("style");t.textContent="\n body{\n margin:0;\n }\n img{\n height:296mm; /* sometimes it overflows to the next page if it's 297mm */\n }\n @page {\n size: A4;\n margin: 0;\n }\n @media print {\n html, body {\n width: 210mm;\n height: 297mm;\n }\n }\n ",document.head.appendChild(t);for(const e of n){const n=document.createElement("img");n.src=e.src,document.body.appendChild(n)}e("img",window.print,l.length)}),l.length)}();
 ```
 4. Print your music!
 

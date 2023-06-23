@@ -1,32 +1,62 @@
-const fireWhenImagesLoad = (querySelector, callback, expectedNumberOfImages) => {
-  const intervalId = setInterval(() => {
-    const images = [...document.querySelectorAll(querySelector)]; //arrays are easier to work with
-    if (images.length === expectedNumberOfImages && images.every(image => image.src && image.complete)) { //musescore sometimes initializes the image without a src
-      clearInterval(intervalId);
-      callback(images);
-    }
-  }, 500);
-}
-
-const pages = document.querySelectorAll("#jmuse-scroller-component>.F16e6");
-
-for (const page of pages) {
-  page.style.height = "0px"; //so all images are "visible" on the page
-}
-
-document.querySelector("section.ASx44").style.height = "999px"; //still need the scrollbar
-document.getElementById("jmuse-scroller-component").scrollTo(0, 1); //trigger the image render
-
-
-fireWhenImagesLoad(".F16e6>img", (images) => {
-  const tempEl = document.createElement("div");
-
-  for (const image of images) {
-    image.style.height = "250mm"; //A4 height with room for margins
-    tempEl.appendChild(image.cloneNode(true));
+//self invoked function (so it doesn't pollute the global scope)
+(function () {
+  const fireWhenImagesLoad = (querySelector, callback, expectedNumberOfImages) => {
+    const intervalId = setInterval(() => {
+      const images = [...document.querySelectorAll(querySelector)]; //arrays are easier to work with
+      if (images.length === expectedNumberOfImages && images.every(image => image.src && image.complete)) { //Musescore sometimes initializes the image without a src
+        clearInterval(intervalId);
+        callback(images);
+      }
+    }, 500);
   }
 
-  document.getElementsByTagName("html")[0].innerHTML = "";
-  document.body.appendChild(tempEl);
-  fireWhenImagesLoad("img", window.print, pages.length);
-}, pages.length);
+  const scrollViewSelector = "#jmuse-scroller-component";
+  const pageElementSelector = `${scrollViewSelector}>.F16e6`;
+  const imageElementSelector = `${pageElementSelector}>img`;
+
+  const pageContainer = document.querySelector(scrollViewSelector);
+  const pages = document.querySelectorAll(pageElementSelector);
+
+  pageContainer.style.scrollSnapType = "none";
+  pageContainer.style.overflow = "visible";
+
+  //so all images are "visible" on the page
+  for (const page of pages) {
+    page.style.height = "0px";
+    page.style.width = "0px";
+    page.style.margin = "0px";
+  }
+
+
+  fireWhenImagesLoad(imageElementSelector, (images) => {
+    document.getElementsByTagName("html")[0].innerHTML = "";
+
+    const style = document.createElement("style");
+    style.textContent = `
+    body{
+      margin:0;
+    }
+    img{
+      height:296mm; /* sometimes it overflows to the next page if it's 297mm */
+    }
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    @media print {
+      html, body {
+        width: 210mm;
+        height: 297mm;
+      }
+    }
+  `;
+    document.head.appendChild(style);
+    for (const image of images) {
+      const imageClone = document.createElement("img");
+      imageClone.src = image.src;
+      document.body.appendChild(imageClone);
+    }
+
+    fireWhenImagesLoad("img", window.print, pages.length);
+  }, pages.length);
+})();
