@@ -1,16 +1,18 @@
 # Musescore Printer
 
-Print and download sheet music from Musescore. No downloads, just run a 1-line console command on your browser.
+Print and download sheet music from Musescore. No downloads - just a single command in your browser.
 
 ## Usage
 
-1. Navigate to a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706). 
-2. Open Inspect Element (CTRL+Shift+I on Chrome). **Important:** Make sure your screen is large enough so that the sheet music scrolls vertically (rather than horizontally)
-3. Copy and paste the following code into the console (second tab on Chrome) (see ./originalCode.js for the actual code)
-  ```js
-  eval(await (await fetch("https://raw.githubusercontent.com/cirex-web/MuseScore-Printer/master/originalCode.js")).text())
-  ```
-4. Print your music!
+1. Open a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706).
+2. Open Inspect Element (Ctrl+Shift+I on Chrome). **Important:** Make sure your screen is large enough so that the sheet music scrolls vertically (rather than horizontally)
+3. Copy and paste the following line of code into the console (second tab on Chrome) (see ./originalCode.js for the actual code)
+
+```js
+eval(await (await fetch("https://raw.githubusercontent.com/cirex-web/MuseScore-Printer/master/originalCode.js")).text())
+```
+
+4. Enjoy! (it may take a couple of seconds if the score is very long.)
 
 Please note that you can print as PDF if you want to just download and save your music. There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
 
