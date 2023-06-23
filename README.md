@@ -10,7 +10,7 @@ Print and download sheet music from Musescore. No downloads, just run a 1-line c
   ```js
   eval(await (await fetch("https://raw.githubusercontent.com/cirex-web/MuseScore-Printer/master/originalCode.js")).text())
   ```
-1. Print your music!
+4. Print your music!
 
 Please note that you can print as PDF if you want to just download and save your music. There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
 
