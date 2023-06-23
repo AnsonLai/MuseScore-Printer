@@ -1,16 +1,16 @@
 # Musescore Printer
 
-Print and download sheet music from Musescore. No downloads, just run a 10-line console command on your browser.
+Print and download sheet music from Musescore. No downloads, just run a 1-line console command on your browser.
 
 ## Usage
 
 1. Navigate to a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706).
 2. Open Inspect Element (CTRL+Shift+I on Chrome).
 3. Copy and paste the project code into the console (second tab on Chrome) (see ./originalCode.js for the un-minified version)
-   ```js
+```js
 const fireWhenImagesLoad=(e,t,o)=>{const n=setInterval(()=>{const l=[...document.querySelectorAll(e)];l.length===o&&l.every(e=>e.src&&e.complete)&&(clearInterval(n),t(l))},500)},pages=document.querySelectorAll("#jmuse-scroller-component>.F16e6");for(const e of pages)e.style.height="0px";document.querySelector("section.ASx44").style.height="999px",document.getElementById("jmuse-scroller-component").scrollTo(0,1),fireWhenImagesLoad(".F16e6>img",e=>{const t=document.createElement("div");for(const o of e)o.style.height="250mm",t.appendChild(o.cloneNode(!0));document.getElementsByTagName("html")[0].innerHTML="",document.body.appendChild(t),fireWhenImagesLoad("img",window.print,pages.length)},pages.length);
-   ```
-4. Print your music.
+```
+4. Print your music!
 
 Please note that you can print as PDF if you want to just download and save your music. There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
 
