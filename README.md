@@ -6,11 +6,11 @@ Print and download sheet music from Musescore. No downloads, just run a 1-line c
 
 1. Navigate to a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706). 
 2. Open Inspect Element (CTRL+Shift+I on Chrome). **Important:** Make sure your screen is large enough so that the sheet music scrolls vertically (rather than horizontally)
-3. Copy and paste the following code into the console (second tab on Chrome) (see ./originalCode.js for the un-minified version)
+3. Copy and paste the following code into the console (second tab on Chrome) (see ./originalCode.js for the actual code)
   ```js
-  !function(){const e=(e,n,t)=>{const o=setInterval((()=>{const m=[...document.querySelectorAll(e)];m.length===t&&m.every((e=>e.src&&e.complete))&&(clearInterval(o),n(m))}),500)},n="#jmuse-scroller-component",t=`${n}>.F16e6`,o=`${t}>img`,m=document.querySelector(n),l=document.querySelectorAll(t);m.style.scrollSnapType="none",m.style.overflow="visible";for(const e of l)e.style.height="0px",e.style.width="0px",e.style.margin="0px";e(o,(n=>{document.getElementsByTagName("html")[0].innerHTML="";const t=document.createElement("style");t.textContent="\n body{\n margin:0;\n }\n img{\n height:296mm; /* sometimes it overflows to the next page if it's 297mm */\n }\n @page {\n size: A4;\n margin: 0;\n }\n @media print {\n html, body {\n width: 210mm;\n height: 297mm;\n }\n }\n ",document.head.appendChild(t);for(const e of n){const n=document.createElement("img");n.src=e.src,document.body.appendChild(n)}e("img",window.print,l.length)}),l.length)}();
+  eval(await (await fetch("https://raw.githubusercontent.com/cirex-web/MuseScore-Printer/master/originalCode.js")).text())
   ```
-4. Print your music!
+1. Print your music!
 
 Please note that you can print as PDF if you want to just download and save your music. There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
 
