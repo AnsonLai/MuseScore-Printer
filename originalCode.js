@@ -1,13 +1,15 @@
 //self invoked function (so it doesn't pollute the global scope)
-(function () {
-  const fireWhenImagesLoad = (querySelector, callback, expectedNumberOfImages) => {
-    const intervalId = setInterval(() => {
-      const images = [...document.querySelectorAll(querySelector)]; //arrays are easier to work with
-      if (images.length === expectedNumberOfImages && images.every(image => image.src && image.complete)) { //Musescore sometimes initializes the image without a src
-        clearInterval(intervalId);
-        callback(images);
-      }
-    }, 500);
+(async function () {
+  const fetchLoadedImages = (querySelector, expectedNumberOfImages) => {
+    return new Promise((resolve) => {
+      const intervalId = setInterval(() => {
+        const images = [...document.querySelectorAll(querySelector)]; //arrays are easier to work with
+        if (images.length === expectedNumberOfImages && images.every(image => image.src && image.complete)) { //Musescore sometimes initializes the image without a src
+          clearInterval(intervalId);
+          resolve(images);
+        }
+      }, 500);
+    })
   }
 
   const scrollViewSelector = "#jmuse-scroller-component";
@@ -28,11 +30,12 @@
   }
 
 
-  fireWhenImagesLoad(imageElementSelector, (images) => {
-    document.getElementsByTagName("html")[0].innerHTML = "";
+  const images = await fetchLoadedImages(imageElementSelector, pages.length);
 
-    const style = document.createElement("style");
-    style.textContent = `
+  document.getElementsByTagName("html")[0].innerHTML = "";
+
+  const style = document.createElement("style");
+  style.textContent = `
     body{
       margin:0;
     }
@@ -50,13 +53,13 @@
       }
     }
   `;
-    document.head.appendChild(style);
-    for (const image of images) {
-      const imageClone = document.createElement("img");
-      imageClone.src = image.src;
-      document.body.appendChild(imageClone);
-    }
+  document.head.appendChild(style);
+  for (const image of images) {
+    const imageClone = document.createElement("img");
+    imageClone.src = image.src;
+    document.body.appendChild(imageClone);
+  }
 
-    fireWhenImagesLoad("img", window.print, pages.length);
-  }, pages.length);
+  fetchLoadedImages("img", pages.length).then(() => window.print());
+
 })();
