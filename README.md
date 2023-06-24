@@ -9,7 +9,7 @@ Print and download sheet music from Musescore. No downloads - just a single comm
 3. Copy and paste the following line of code into the console (second tab on Chrome) (see ./originalCode.js for the actual code)
 
 ```js
-eval(await (await fetch("https://raw.githubusercontent.com/cirex-web/MuseScore-Printer/master/originalCode.js")).text())
+eval(await (await fetch("https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js")).text())
 ```
 
 4. Enjoy! (it may take a couple of seconds if the score is very long.)
