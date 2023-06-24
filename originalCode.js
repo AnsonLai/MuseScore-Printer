@@ -1,6 +1,7 @@
 //self invoked function (so it doesn't pollute the global scope)
 (async function () {
   const fetchLoadedImages = (querySelector, expectedNumberOfImages) => {
+    console.log("Waiting for images to load...");
     return new Promise((resolve) => {
       const intervalId = setInterval(() => {
         const images = [...document.querySelectorAll(querySelector)]; //arrays are easier to work with
@@ -17,17 +18,21 @@
   const imageElementSelector = `${pageElementSelector}>img`;
 
   const pageContainer = document.querySelector(scrollViewSelector);
+  const allChildren = document.querySelectorAll(scrollViewSelector + ">*");
   const pages = document.querySelectorAll(pageElementSelector);
 
-  pageContainer.style.scrollSnapType = "none";
-  pageContainer.style.overflow = "visible";
+  const SCROLL_HEIGHT_PX = 10000;
+  const VIEWPORT_HEIGHT_PX = 9999;
 
   //so all images are "visible" on the page
-  for (const page of pages) {
-    page.style.height = "0px";
-    page.style.width = "0px";
-    page.style.margin = "0px";
+  for (const el of allChildren) {
+    el.style.display = "none";
   }
+
+  pageContainer.insertAdjacentHTML("beforeend", `<div style="height:${SCROLL_HEIGHT_PX}px"></div>`);
+  pageContainer.style.height = VIEWPORT_HEIGHT_PX + "px";
+  pageContainer.scrollTo(0, 0); //just to reset scroll real quick
+  pageContainer.scrollTo(0, 1);
 
 
   const images = await fetchLoadedImages(imageElementSelector, pages.length);
