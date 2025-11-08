@@ -1,6 +1,6 @@
 //self invoked function (so it doesn't pollute the global scope)
 (async function () {
-  const fetchLoadedImages = (querySelector, expectedNumberOfImages) => {
+  const waitForImagesToLoad = (querySelector, expectedNumberOfImages) => {
     console.log("Waiting for images to load...");
     return new Promise((resolve) => {
       const intervalId = setInterval(() => {
@@ -14,7 +14,7 @@
   }
 
   const scrollViewSelector = "#jmuse-scroller-component";
-  const pageElementSelector = `${scrollViewSelector}>.F16e6`;
+  const pageElementSelector = `${scrollViewSelector}>.A8huy`;
   const imageElementSelector = `${pageElementSelector}>img`;
 
   const pageContainer = document.querySelector(scrollViewSelector);
@@ -35,7 +35,7 @@
   pageContainer.scrollTo(0, 1);
 
 
-  const images = await fetchLoadedImages(imageElementSelector, pages.length);
+  const images = await waitForImagesToLoad(imageElementSelector, pages.length);
 
   document.getElementsByTagName("html")[0].innerHTML = "";
 
@@ -43,6 +43,9 @@
   style.textContent = `
     body{
       margin:0;
+      :not(img){
+      display:none;
+      }
     }
     img{
       height:296mm; /* sometimes it overflows to the next page if it's 297mm */
@@ -65,6 +68,6 @@
     document.body.appendChild(imageClone);
   }
 
-  fetchLoadedImages("img", pages.length).then(() => window.print());
+  waitForImagesToLoad("img", pages.length).then(() => window.print());
 
 })();
