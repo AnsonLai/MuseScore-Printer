@@ -21,18 +21,15 @@
   const allChildren = document.querySelectorAll(scrollViewSelector + ">*");
   const pages = document.querySelectorAll(pageElementSelector);
 
-  const SCROLL_HEIGHT_PX = 10000;
-  const VIEWPORT_HEIGHT_PX = 9999;
 
   //so all images are "visible" on the page
   for (const el of allChildren) {
-    el.style.display = "none";
+    el.style.position = "absolute";
   }
 
-  pageContainer.insertAdjacentHTML("beforeend", `<div style="height:${SCROLL_HEIGHT_PX}px"></div>`);
-  pageContainer.style.height = VIEWPORT_HEIGHT_PX + "px";
+  pageContainer.style.height = "100px";
   pageContainer.scrollTo(0, 0); //just to reset scroll real quick
-  pageContainer.scrollTo(0, 1);
+  pageContainer.scrollTo(0, 1); //trigger image loading
 
 
   const images = await waitForImagesToLoad(imageElementSelector, pages.length);
