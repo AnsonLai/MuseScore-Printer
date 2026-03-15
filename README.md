@@ -12,7 +12,7 @@ Print and download sheet music from Musescore. No downloads, no extensions—jus
 eval(
   await (
     await fetch(
-      "[https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js](https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js)"
+      "https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js"
     )
   ).text()
 );
