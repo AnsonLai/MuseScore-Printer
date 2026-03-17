@@ -1,18 +1,32 @@
 # Musescore Printer
 
-Print and download sheet music from Musescore. No downloads - just a single command in your browser.
+Print and download sheet music from Musescore. No downloads, no extensions—just a single command in your browser.
 
-## Usage
+## Quick Start (Chrome)
 
-1. Open a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706).
-2. Open Inspect Element (Ctrl+Shift+I on Chrome). **Important:** Make sure your screen is large enough so that the sheet music scrolls vertically (rather than horizontally)
-3. Copy and paste the following line of code into the console (second tab on Chrome) (see ./originalCode.js for the actual code)
-```js
-eval(await (await fetch("https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js")).text())
+1. **Open a Musescore song** (e.g., `https://musescore.com/user/8877016/scores/1974706`).
+2. **Open the Developer Console** by pressing `Ctrl` + `Shift` + `J` (Windows/Linux) or `Cmd` + `Option` + `J` (Mac).
+3. **Paste the following code** into the console and hit **Enter**:
+
+```javascript
+eval(
+  await (
+    await fetch(
+      "https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js",
+    )
+  ).text(),
+);
 ```
-4. Enjoy! (it may take a couple of seconds if the score is very long.)
 
-Please note that you can print as PDF if you want to just download and save your music. There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
+4. **Print and enjoy!** (Note: Long scores may take a few seconds to process).
+
+> **Tip:** To save the file locally, change the destination to **Save as PDF** in your print dialog. You can also uncheck "Headers and Footers" in your print settings to remove the unsightly URL and dates from your final document.
+
+## Other Browsers
+
+- **Firefox:** Press `Ctrl` + `Shift` + `K` (Windows/Linux) or `Cmd` + `Option` + `K` (Mac).
+- **Edge:** Press `Ctrl` + `Shift` + `J` (Windows/Linux) or `Cmd` + `Option` + `J` (Mac).
+- **Safari:** Press `Cmd` + `Option` + `C` _(Note: You must first enable the Develop menu in Safari's Advanced Preferences)._
 
 ## Purpose
 
