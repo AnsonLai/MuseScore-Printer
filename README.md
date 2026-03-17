@@ -7,9 +7,17 @@ Print and download sheet music from Musescore. No downloads - just a single comm
 1. Open a Musescore song (i.e. https://musescore.com/user/8877016/scores/1974706).
 2. Open Inspect Element (Ctrl+Shift+I on Chrome). **Important:** Make sure your screen is large enough so that the sheet music scrolls vertically (rather than horizontally)
 3. Copy and paste the following line of code into the console (second tab on Chrome) (see ./originalCode.js for the actual code)
+
 ```js
-eval(await (await fetch("https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js")).text())
+eval(
+  await (
+    await fetch(
+      "https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js",
+    )
+  ).text(),
+);
 ```
+
 4. Enjoy! (it may take a couple of seconds if the score is very long.)
 
 Please note that you can print as PDF if you want to just download and save your music. There are options in the print dialog to remove the unsightly URL and date headers/footers as well.
@@ -23,3 +31,10 @@ There seem to be some solutions with Greasemonkey but for anyone who wants to ju
 ## Troubleshooting
 
 Chances are, Musescore will not use the class name I search for indefinitely. For anyone who knows anything about HTML DOM, this will be a 10 second fix. There is little they can do as long as they continue to display sheet music on their page. Feel free to send me a message and I'm more than happy to update this project if it breaks.
+
+## Testing
+
+Try it on these examples!
+
+- https://musescore.com/user/27114623/scores/4835917
+  -LONG: https://musescore.com/user/5488236/scores/4842695

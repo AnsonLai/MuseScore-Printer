@@ -14,19 +14,19 @@
   }
 
   const scrollViewSelector = "#jmuse-scroller-component";
-  const pageElementSelector = `${scrollViewSelector}>.A8huy`;
+  const pageElementSelector = `${scrollViewSelector}>.LfryA`;
   const imageElementSelector = `${pageElementSelector}>img`;
 
   const pageContainer = document.querySelector(scrollViewSelector);
   const allChildren = document.querySelectorAll(scrollViewSelector + ">*");
   const pages = document.querySelectorAll(pageElementSelector);
 
-  const SCROLL_HEIGHT_PX = 10000;
-  const VIEWPORT_HEIGHT_PX = 9999;
+  const SCROLL_HEIGHT_PX = 2000;
+  const VIEWPORT_HEIGHT_PX = 9;
 
   //so all images are "visible" on the page
   for (const el of allChildren) {
-    el.style.display = "none";
+    el.style.position = "absolute";
   }
 
   pageContainer.insertAdjacentHTML("beforeend", `<div style="height:${SCROLL_HEIGHT_PX}px"></div>`);
