@@ -179,6 +179,52 @@
     return Promise.all(imageUrls.map(preloadImage));
   }
 
+  function lockPrintDocument(allowedImages, allowedStyleElement) {
+    // Remove app-level classes/attributes that may trigger further UI behavior.
+    document.documentElement.removeAttribute("class");
+    document.body.removeAttribute("class");
+
+    // Remove any nodes that are not part of the print document right now.
+    for (const child of [...document.body.children]) {
+      if (!allowedImages.includes(child)) {
+        child.remove();
+      }
+    }
+
+    for (const child of [...document.head.children]) {
+      if (child !== allowedStyleElement) {
+        child.remove();
+      }
+    }
+
+    // Watch for anything MuseScore tries to inject afterward and remove it.
+    const observer = new MutationObserver((mutationList) => {
+      for (const mutation of mutationList) {
+        for (const node of mutation.addedNodes) {
+          if (!(node instanceof Element)) continue;
+
+          const isAllowedBodyImage =
+            node.tagName === "IMG" && allowedImages.includes(node);
+
+          const isAllowedHeadStyle = node === allowedStyleElement;
+
+          if (!isAllowedBodyImage && !isAllowedHeadStyle) {
+            node.remove();
+          }
+        }
+      }
+    });
+
+    observer.observe(document.head, { childList: true });
+    observer.observe(document.body, { childList: true, subtree: false });
+
+    // Also freeze body/head contents to just the intended nodes.
+    document.body.replaceChildren(...allowedImages);
+    document.head.replaceChildren(allowedStyleElement);
+
+    return observer;
+  }
+
   function renderPrintDocument(imageUrls) {
     // Replace the current page with a minimal print-only document
     // that contains one score page per printed page.
@@ -188,30 +234,36 @@
     const style = document.createElement("style");
     style.textContent = `
       html, body {
-        margin: 0;
-        padding: 0;
-        background: white;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        overflow: visible !important;
       }
 
       body {
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      body > :not(img) {
+        display: none !important;
       }
 
       img {
-        display: block;
-        width: ${PRINT_PAGE_WIDTH_MM}mm;
-        height: ${PRINT_PAGE_HEIGHT_MM}mm;
-        object-fit: contain;
-        margin: 0;
-        padding: 0;
-        page-break-after: always;
-        break-after: page;
+        display: block !important;
+        width: ${PRINT_PAGE_WIDTH_MM}mm !important;
+        height: ${PRINT_PAGE_HEIGHT_MM}mm !important;
+        object-fit: contain !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        page-break-after: always !important;
+        break-after: page !important;
       }
 
       img:last-child {
-        page-break-after: auto;
-        break-after: auto;
+        page-break-after: auto !important;
+        break-after: auto !important;
       }
 
       @page {
@@ -221,17 +273,23 @@
 
       @media print {
         html, body {
-          width: ${PRINT_PAGE_WIDTH_MM}mm;
+          width: ${PRINT_PAGE_WIDTH_MM}mm !important;
         }
       }
     `;
     document.head.appendChild(style);
 
+    const images = [];
     for (const imageUrl of imageUrls) {
       const image = document.createElement("img");
       image.src = imageUrl;
       document.body.appendChild(image);
+      images.push(image);
     }
+
+    const observer = lockPrintDocument(images, style);
+
+    return { images, style, observer };
   }
 
   const statusOverlay = createStatusOverlay();
@@ -260,10 +318,13 @@
     await preloadImages(printableImageUrls);
 
     // The overlay disappears naturally when the document is rebuilt.
-    renderPrintDocument(printableImageUrls);
+    const { observer } = renderPrintDocument(printableImageUrls);
 
     await sleep(1000);
     window.print();
+
+    // Keep the observer active through the print dialog opening, then disconnect.
+    setTimeout(() => observer.disconnect(), 10000);
   } finally {
     // Safe cleanup in case an error happens before the document is replaced.
     statusOverlay.remove();
