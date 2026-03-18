@@ -12,9 +12,9 @@ Print and download sheet music from Musescore. No downloads, no extensions—jus
 eval(
   await (
     await fetch(
-      "https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js"
+      "https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js",
     )
-  ).text()
+  ).text(),
 );
 ```
 
@@ -24,9 +24,9 @@ eval(
 
 ## Other Browsers
 
-* **Firefox:** Press `Ctrl` + `Shift` + `K` (Windows/Linux) or `Cmd` + `Option` + `K` (Mac).
-* **Edge:** Press `Ctrl` + `Shift` + `J` (Windows/Linux) or `Cmd` + `Option` + `J` (Mac).
-* **Safari:** Press `Cmd` + `Option` + `C` *(Note: You must first enable the Develop menu in Safari's Advanced Preferences).*
+- **Firefox:** Press `Ctrl` + `Shift` + `K` (Windows/Linux) or `Cmd` + `Option` + `K` (Mac).
+- **Edge:** Press `Ctrl` + `Shift` + `J` (Windows/Linux) or `Cmd` + `Option` + `J` (Mac).
+- **Safari:** Press `Cmd` + `Option` + `C` _(Note: You must first enable the Develop menu in Safari's Advanced Preferences)._
 
 ## Purpose
 
@@ -36,6 +36,11 @@ There seem to be some solutions with Greasemonkey but for anyone who wants to ju
 
 ## Troubleshooting
 
-Because this script relies on Musescore's current HTML structure, it will likely break if they update their website. 
+Chances are, Musescore will not use the class name I search for indefinitely. For anyone who knows anything about HTML DOM, this will be a 10 second fix. There is little they can do as long as they continue to display sheet music on their page. Feel free to send me a message and I'm more than happy to update this project if it breaks.
 
-Fortunately, adjusting to new class names or DOM structures is usually a quick fix. If the script stops working, feel free to open an issue or send me a message, and I'll be happy to update the project!
+## Testing
+
+Try it on these examples!
+
+- https://musescore.com/user/27114623/scores/4835917
+- LONG: https://musescore.com/user/5488236/scores/4842695
