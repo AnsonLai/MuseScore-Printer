@@ -2,6 +2,11 @@
 
 Print and download sheet music from Musescore. No downloads, no extensions—just a single command in your browser.
 
+## Using a Bookmarklet
+
+1. **Create a bookmark** with the text `javascript:(async()=>{eval(await(await fetch("https://raw.githubusercontent.com/AnsonLai/MuseScore-Printer/master/originalCode.js")).text())})()`
+2. **Click bookmark** and enjoy your printed sheet music.
+
 ## Quick Start (Chrome)
 
 1. **Open a Musescore song** (e.g., `https://musescore.com/user/8877016/scores/1974706`).
